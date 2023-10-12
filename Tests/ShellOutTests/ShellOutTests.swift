@@ -267,6 +267,20 @@ final class ShellOutTests: XCTestCase {
             v0.1.0
             """)
     }
+
+    func test_environment_isolation() async throws {
+        setenv("TOKEN", "secret", 1)
+        defer { unsetenv("TOKEN") }
+
+        await XCTAssertEqualAsync(
+            try await shellOut(to: "bash", arguments: ["-c", "echo $TOKEN"],
+                               environment: ProcessInfo.processInfo.environment).stdout, "secret"
+        )
+        await XCTAssertEqualAsync(
+            try await shellOut(to: "bash", arguments: ["-c", "echo $TOKEN"],
+                               environment: [:]).stdout, ""
+        )
+    }
 }
 
 extension ShellOutTests {
