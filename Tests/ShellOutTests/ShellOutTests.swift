@@ -223,12 +223,12 @@ final class ShellOutTests: XCTestCase {
     }
 
     func test_Argument_ExpressibleByStringLiteral() throws {
-        XCTAssertEqual(("foo" as Argument).description, "foo")
-        XCTAssertEqual(("foo bar" as Argument).description, "'foo bar'")
+        XCTAssertEqual(("foo" as ShellArgument).description, "foo")
+        XCTAssertEqual(("foo bar" as ShellArgument).description, "'foo bar'")
     }
 
     func test_Argument_url() throws {
-        XCTAssertEqual(Argument.url(.init(string: "https://example.com")!).description,
+        XCTAssertEqual(ShellArgument.url(.init(string: "https://example.com")!).description,
                        "https://example.com")
     }
 

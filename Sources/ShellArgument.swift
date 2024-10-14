@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Argument: Equatable {
+public enum ShellArgument: Equatable {
     case quoted(QuotedString)
     case verbatim(String)
 
@@ -13,13 +13,13 @@ public enum Argument: Equatable {
     }
 }
 
-extension Argument: ExpressibleByStringLiteral {
+extension ShellArgument: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self = .quoted(.init(value))
     }
 }
 
-extension Argument: CustomStringConvertible {
+extension ShellArgument: CustomStringConvertible {
     public var description: String {
         switch self {
             case let .quoted(value):
@@ -30,17 +30,17 @@ extension Argument: CustomStringConvertible {
     }
 }
 
-extension Argument {
+extension ShellArgument {
     public static func url(_ url: URL) -> Self { url.absoluteString.verbatim }
 }
 
 
 extension StringProtocol {
-    public var quoted: Argument { .init(quoted: self) }
-    public var verbatim: Argument { .init(verbatim: self) }
+    public var quoted: ShellArgument { .init(quoted: self) }
+    public var verbatim: ShellArgument { .init(verbatim: self) }
 }
 
 extension Sequence<StringProtocol> {
-    public var quoted: [Argument] { map(\.quoted) }
-    public var verbatim: [Argument] { map(\.verbatim) }
+    public var quoted: [ShellArgument] { map(\.quoted) }
+    public var verbatim: [ShellArgument] { map(\.verbatim) }
 }
