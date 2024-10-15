@@ -1,5 +1,5 @@
 public extension ShellOutCommand {
-    static func bash(arguments: [Argument]) -> Self {
+    static func bash(arguments: [ShellArgument]) -> Self {
         let arguments = arguments.first == "-c" ? Array(arguments.dropFirst()) : arguments
         return .init(command: "bash", arguments: ["-c", arguments.map(\.description).joined(separator: " ")])
     }
